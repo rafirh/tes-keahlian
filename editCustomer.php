@@ -29,6 +29,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label>Customer ID</label>
+                                    <input type="text" class="form-control" placeholder="Customer ID" name="customer_id" value= "<?=$data['customer_id']?>" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label>Customer Name</label>
                                     <input
                                     type="text"
@@ -49,12 +57,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="update ml-auto mr-auto">
+                            <div class="update ml-auto mr-auto mt-3">
                                 <button type="submit" class="btn btn-primary btn-round" name="submit">Update</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="update ml-auto mr-auto">
                                 <a href="index.php" class="btn btn-danger btn-round">Cancel</a>
                             </div>
                         </div>

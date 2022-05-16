@@ -1,9 +1,12 @@
 <?php 
     include "./conn.php";
     $id = $_GET['order_id'];
-    $qry = mysqli_query($conn, "select * from order where order_id = '".$id."'");
-    $data=mysqli_fetch_array($qry);
- ?>
+    $qry = mysqli_query($conn, "select * from orders where order_id = '".$id."'");
+    $data_order=mysqli_fetch_array($qry);
+
+    $qry2 = mysqli_query($conn, "select * from customer where customer_id = '".$data_order['customer_id']."'");
+    $data_customer = mysqli_fetch_array($qry2);
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,9 +36,9 @@
                                     <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Customer Name"
-                                    name="name"
-                                    value="<?=$data['order_id']?>"
+                                    placeholder="Order ID"
+                                    name="order_id"
+                                    value="<?=$data_order['order_id']?>"
                                     disabled
                                     />
                                 </div>
@@ -44,8 +47,40 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label></label>
-                                    <input type="text" class="form-control" placeholder="Telephone" name="telp" value= "<?=$data['telp']?>" required/>
+                                    <label>Customer Name</label>
+                                    <input type="text" class="form-control" placeholder="Customer Name" name="customer_name" value= "<?=$data_customer['name']?>" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Telphone</label>
+                                    <input type="text" class="form-control" placeholder="Customer Telp" name="customer_telp" value= "<?=$data_customer['telp']?>" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Distance (KM)</label>
+                                    <input type="number" class="form-control" placeholder="Distance" name="distance" value= "<?=$data_order['distance']?>" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Discount (%)</label>
+                                    <input type="number" class="form-control" placeholder="Discount" name="discount" value= "<?=$data_order['discount']?>" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Price (IDR)</label>
+                                    <input type="number" class="form-control" placeholder="Price" name="price" value= "<?=$data_order['price']?>" required/>
                                 </div>
                             </div>
                         </div>
@@ -56,14 +91,13 @@
                         </div>
                         <div class="row">
                             <div class="update ml-auto mr-auto">
-                                <a href="index.php" class="btn btn-danger btn-round">Cancel</a>
+                                <a href="showOrder.php" class="btn btn-danger btn-round">Cancel</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-4"></div>
     </div>
   </div>
   <!--   Core JS Files   -->
@@ -91,16 +125,19 @@
 </html>
 <?php
     if(isset($_POST['submit'])){
-        $name = $_POST['name'];
-        $telp = $_POST['telp'];
+        $distance = $_POST['distance'];
+        $discount = $_POST['discount'];
+        $price = $_POST['price'];
         
-        $query = mysqli_query($conn, "update customer set 
-        name = '".$name."',
-        telp = '".$telp."' where customer_id = '".$id."'");
+        $query = mysqli_query($conn, "update orders set 
+        distance = '".$distance."',
+        discount = '".$discount."',
+        price = '".$price."' 
+        where order_id = '".$id."'");
         if($query){
             echo "<script>
                 alert('Succesfully edited');
-                window.location.href = 'index.php'
+                window.location.href = 'showOrder.php'
             </script>";
         }else{
             echo "<script>

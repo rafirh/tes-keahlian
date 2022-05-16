@@ -56,7 +56,7 @@ include 'conn.php';
                             </div>
                             <div class="row">
                                 <div class="update ml-auto mr-auto">
-                                    <a href="index.php" class="btn btn-danger btn-round">Cancel</a>
+                                    <a href="showOrder.php" class="btn btn-danger btn-round">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -92,7 +92,7 @@ include 'conn.php';
 </html>
 <?php
 if (isset($_POST['submit'])) {
-    $order_id = date("isdmY");
+    $order_id = date("YmdHis");
     $customer_id = $_POST['customer_id'];
     $distance = $_POST['distance'];
     $discount = 0;
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
             $price = $distance * 10000;
         }
     }
-
+    include 'conn.php';
     $query = mysqli_query($conn, "insert into orders (order_id ,customer_id, distance, discount, price) values ('" . $order_id . "','" . $customer_id . "','" . $distance . "', '" . $discount . "','" . $price . "')");
     if ($query) {
         echo "<script>
